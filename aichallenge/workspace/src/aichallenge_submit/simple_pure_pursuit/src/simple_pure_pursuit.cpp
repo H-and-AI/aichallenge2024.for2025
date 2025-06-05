@@ -32,7 +32,7 @@ SimplePurePursuit::SimplePurePursuit()
   sub_kinematics_ = create_subscription<Odometry>(
     "input/kinematics", 1, [this](const Odometry::SharedPtr msg) { odometry_ = msg; });
   sub_trajectory_ = create_subscription<Trajectory>(
-    "input/trajectory", 1, [this](const Trajectory::SharedPtr msg) { trajectory_ = msg; });
+    "/my_topic/trajectory", 1, [this](const Trajectory::SharedPtr msg) { trajectory_ = msg; });
 
   using namespace std::literals::chrono_literals;
   timer_ =
