@@ -1,9 +1,0 @@
-<launch>
-    <node pkg="trajectory_follower_node" exec="controller_node_exe" name="controller_node_exe" namespace="trajectory_follower">
-        <param name="ctrl_period" value="0.03" />
-        <param name="timeout_thr_sec" value="0.5" />
-        <param from="$(find-pkg-share my_launch)/config/lateral/mpc.param.yaml"/>
-        <param from="$(find-pkg-share my_launch)/config/longitudinal/pid.param.yaml"/>
-        <param from="$(find-pkg-share my_launch)/config/vehicle.info.param.yaml"/>
-    </node>
-</launch>

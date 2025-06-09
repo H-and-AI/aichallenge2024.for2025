@@ -14,14 +14,14 @@ Panels:
         - /Sensing1/GNSS1/PoseWithCovariance1/Covariance1
         - /Localization1/EKF1
         - /Localization1/EKF1/PoseHistory1/Line1
-        - /Planning1
         - /Planning1/MissionPlanning1/GoalPose1
         - /Planning1/ScenarioPlanning1
-        - /Planning1/ScenarioPlanning1/ScenarioTrajectory1
         - /Planning1/ScenarioPlanning1/LaneDriving1
         - /Planning1/ScenarioPlanning1/LaneDriving1/BehaviorPlanning1/Path1
-        - /Control1/PointStamped1
+        - /Control1
         - /Control1/PointStamped1/Topic1
+        - /Control1/Trajectory1
+        - /Control1/Trajectory1/View Path1
       Splitter Ratio: 0.5737704634666443
     Tree Height: 329
   - Class: rviz_common/Selection
@@ -31,7 +31,8 @@ Panels:
     Name: Tool Properties
     Splitter Ratio: 0.5886790156364441
   - Class: rviz_common/Views
-    Expanded: ~
+    Expanded:
+      - /Current View1
     Name: Views
     Splitter Ratio: 0.5
   - Class: tier4_localization_rviz_plugin/InitialPoseButtonPanel
@@ -1728,6 +1729,47 @@ Visualization Manager:
             Reliability Policy: Best Effort
             Value: /control/debug/lookahead_point
           Value: true
+        - Class: rviz_plugins/Trajectory
+          Color Border Vel Max: 3
+          Enabled: true
+          Name: Trajectory
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /lateral/predicted_trajectory
+          Value: true
+          View Footprint:
+            Alpha: 1
+            Color: 230; 230; 50
+            Offset from BaseLink: 0
+            Rear Overhang: 1.0299999713897705
+            Value: false
+            Vehicle Length: 4.769999980926514
+            Vehicle Width: 1.8300000429153442
+          View Path:
+            Alpha: 0.5
+            Color: 0; 0; 0
+            Constant Color: false
+            Value: true
+            Width: 1
+          View Point:
+            Alpha: 1
+            Color: 0; 60; 255
+            Offset: 0
+            Radius: 0.10000000149011612
+            Value: false
+          View Text Velocity:
+            Scale: 0.30000001192092896
+            Value: false
+          View Velocity:
+            Alpha: 1
+            Color: 0; 0; 0
+            Constant Color: false
+            Scale: 0.30000001192092896
+            Value: true
       Enabled: true
       Name: Control
     - Class: rviz_default_plugins/MarkerArray
@@ -1875,11 +1917,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 33.50910568237305
+      Scale: 46.55133819580078
       Target Frame: base_link
       Value: TopDownOrtho (rviz_default_plugins)
-      X: 6.102046966552734
-      Y: -4.125394344329834
+      X: -1.3018193244934082
+      Y: 1.8211264610290527
     Saved:
       - Class: rviz_default_plugins/ThirdPersonFollower
         Distance: 18
@@ -1934,5 +1976,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1850
-  X: 3066
-  Y: 682
+  X: 2716
+  Y: 854

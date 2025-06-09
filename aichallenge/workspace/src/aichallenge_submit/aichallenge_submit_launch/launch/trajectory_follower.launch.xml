@@ -1,0 +1,40 @@
+<launch>
+    <!-- component -->
+    <arg name="use_intra_process" default="false" description="use ROS 2 component container communication"/>
+    <arg name="use_multithread" default="true" description="use multithread"/>
+    <let name="container_executable" value="component_container" unless="$(var use_multithread)"/>
+    <let name="container_executable" value="component_container_mt" if="$(var use_multithread)"/>
+
+    <group>
+        <push-ros-namespace namespace="control"/>
+
+        <group>
+            <!-- set a control container to run all required components in the same process -->
+            <node_container pkg="rclcpp_components" exec="$(var container_executable)" name="control_container" namespace="">
+            </node_container>
+      
+            <!-- trajectory_follower_node -->
+            <group>
+                <load_composable_node target="/control/control_container">
+                    <composable_node pkg="trajectory_follower_node" plugin="autoware::motion::control::trajectory_follower_node::Controller" name="controller_node_exe" namespace="trajectory_follower">
+                        <remap from="~/input/reference_trajectory" to="/planning/scenario_planning/trajectory"/>
+                        <remap from="~/input/current_odometry" to="/localization/kinematic_state"/>
+                        <remap from="~/input/current_steering" to="/vehicle/status/steering_status"/>
+                        <remap from="~/input/current_accel" to="/localization/acceleration"/>
+                        <remap from="~/input/current_operation_mode" to="/system/operation_mode/state"/>
+                        <remap from="~/output/predicted_trajectory" to="/lateral/predicted_trajectory"/>
+                        <remap from="~/output/control_cmd" to="/control/command/control_cmd"/>
+                        <param name="lateral_controller_mode" value="mpc"/>
+                        <param name="longitudinal_controller_mode" value="pid"/>
+                        <param from="$(find-pkg-share aichallenge_submit_launch)/config/trajectory_follower/nearest_search.param.yaml"/>
+                        <param from="$(find-pkg-share aichallenge_submit_launch)/config/trajectory_follower/trajectory_follower_node.param.yaml"/>
+                        <param from="$(find-pkg-share aichallenge_submit_launch)/config/trajectory_follower/mpc.param.yaml"/>
+                        <param from="$(find-pkg-share aichallenge_submit_launch)/config/trajectory_follower/pid.param.yaml"/>
+                        <param from="$(find-pkg-share aichallenge_submit_launch)/config/trajectory_follower/vehicle_info.param.yaml"/>
+                        <extra_arg name="use_intra_process_comms" value="$(var use_intra_process)"/>
+                    </composable_node>
+                </load_composable_node>
+            </group>
+        </group>
+    </group>
+</launch>
